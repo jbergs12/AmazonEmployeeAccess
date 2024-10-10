@@ -18,16 +18,14 @@ logreg_wf <- workflow() |>
   add_recipe(amz_rec) |> 
   fit(data=amz_train)
 
-plogreg_preds <- logreg_wf |>
+logreg_preds <- logreg_wf |>
   predict(new_data = amz_test,
           type="prob")
 
-kaggle_submission <- plogreg_preds |> 
+kaggle_submission <- logreg_preds |> 
   bind_cols(amz_test) |> 
-  select(MGR_ID, .pred_1) |> 
-  rename(Id = MGR_ID,
-         ACTION=.pred_1) |> 
-  mutate(Id=as.factor(Id))
+  select(id, .pred_1) |> 
+  rename(Id = id,
+         ACTION=.pred_1)
 
 vroom_write(x=kaggle_submission, file="./logreg.csv", delim = ",")
-
