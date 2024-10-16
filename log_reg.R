@@ -2,6 +2,7 @@ library(tidymodels)
 library(tidyverse)
 library(vroom)
 library(glmnet)
+library(embed)
 source("amz_recipe.R")
 
 amz_train <- vroom("train.csv")
@@ -28,4 +29,4 @@ kaggle_submission <- logreg_preds |>
   rename(Id = id,
          ACTION=.pred_1)
 
-vroom_write(x=kaggle_submission, file="./logreg.csv", delim = ",")
+vroom_write(x=kaggle_submission, file="./logreg2.csv", delim = ",")
