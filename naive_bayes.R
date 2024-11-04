@@ -26,10 +26,6 @@ nbayes_grid <- grid_regular(
   smoothness(),
   levels = 5)
 
-nbayes_wf <- workflow() |> 
-  add_model(amz_nbayes) |> 
-  add_recipe(amz_rec)
-
 folds <- vfold_cv(amz_train, v = 5, repeats = 1)
 
 CV_results <- run_cv(nbayes_wf, folds, nbayes_grid, metric = metric_set(roc_auc),
